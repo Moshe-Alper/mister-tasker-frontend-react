@@ -8,7 +8,7 @@ export const taskService = {
     addTaskMsg
 }
 
-async function query(filterBy = { txt: '', price: 0 }) {
+async function query(filterBy = { txt: '' }) {
     return httpService.get(`task`, filterBy)
 }
 

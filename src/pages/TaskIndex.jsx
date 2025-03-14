@@ -30,7 +30,7 @@ export function TaskIndex() {
 
     async function onAddTask() {
         const task = taskService.getEmptyTask()
-        task.vendor = prompt('Vendor?')
+        task.title = prompt('Title?')
         try {
             const savedTask = await addTask(task)
             showSuccessMsg(`Task added (id: ${savedTask._id})`)
@@ -40,13 +40,13 @@ export function TaskIndex() {
     }
 
     async function onUpdateTask(task) {
-        const speed = +prompt('New speed?', task.speed)
-        if(speed === 0 || speed === task.speed) return
+        const importance = +prompt('New importance?', task.importance)
+        if(importance === 0 || importance === task.importance) return
 
-        const taskToSave = { ...task, speed }
+        const taskToSave = { ...task, importance }
         try {
             const savedTask = await updateTask(taskToSave)
-            showSuccessMsg(`Task updated, new speed: ${savedTask.speed}`)
+            showSuccessMsg(`Task updated, new importance: ${savedTask.importance}`)
         } catch (err) {
             showErrorMsg('Cannot update task')
         }        

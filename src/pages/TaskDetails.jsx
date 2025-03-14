@@ -31,8 +31,7 @@ export function TaskDetails() {
       <Link to="/task">Back to list</Link>
       <h1>Task Details</h1>
       {task && <div>
-        <h3>{task.vendor}</h3>
-        <h4>${task.price}</h4>
+        <h3>{task.title}</h3>
         <pre> {JSON.stringify(task, null, 2)} </pre>
       </div>
       }

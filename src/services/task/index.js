@@ -7,8 +7,8 @@ import { taskService as remote } from './task.service.remote'
 
 function getEmptyTask() {
 	return {
-		vendor: makeId(),
-		speed: getRandomIntInclusive(80, 240),
+		title: makeId(),
+		importance: getRandomIntInclusive(1, 3),
 		msgs: [],
 	}
 }
@@ -16,7 +16,7 @@ function getEmptyTask() {
 function getDefaultFilter() {
     return {
         txt: '',
-        minSpeed: '',
+        minImportance: '',
         sortField: '',
         sortDir: '',
     }

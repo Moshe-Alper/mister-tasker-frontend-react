@@ -44,8 +44,8 @@ export function taskReducer(state = initialState, action) {
 
 function unitTestReducer() {
     var state = initialState
-    const task1 = { _id: 'b101', vendor: 'Task ' + parseInt(Math.random() * 10), msgs: [] }
-    const task2 = { _id: 'b102', vendor: 'Task ' + parseInt(Math.random() * 10), msgs: [] }
+    const task1 = { _id: 'b101', title: 'Task ' + parseInt(Math.random() * 10), msgs: [] }
+    const task2 = { _id: 'b102', title: 'Task ' + parseInt(Math.random() * 10), msgs: [] }
 
     state = taskReducer(state, { type: SET_TASKS, tasks: [task1] })
     console.log('After SET_TASKS:', state)
@@ -53,7 +53,7 @@ function unitTestReducer() {
     state = taskReducer(state, { type: ADD_TASK, task: task2 })
     console.log('After ADD_TASK:', state)
 
-    state = taskReducer(state, { type: UPDATE_TASK, task: { ...task2, vendor: 'Good' } })
+    state = taskReducer(state, { type: UPDATE_TASK, task: { ...task2, title: 'Good' } })
     console.log('After UPDATE_TASK:', state)
 
     state = taskReducer(state, { type: REMOVE_TASK, taskId: task2._id })

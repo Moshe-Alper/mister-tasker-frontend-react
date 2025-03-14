@@ -26,7 +26,7 @@ export function TaskFilter({ filterBy, setFilterBy }) {
     }
 
     function clearFilter() {
-        setFilterToEdit({ ...filterToEdit, txt: '', minSpeed: '', maxPrice: '' })
+        setFilterToEdit({ ...filterToEdit, txt: '', minImportance: '' })
     }
     
     function clearSort() {
@@ -46,9 +46,9 @@ export function TaskFilter({ filterBy, setFilterBy }) {
             <input
                 type="number"
                 min="0"
-                name="minSpeed"
-                value={filterToEdit.minSpeed}
-                placeholder="min. speed"
+                name="minImportance"
+                value={filterToEdit.minImportance}
+                placeholder="min. importance"
                 onChange={handleChange}
                 required
             />
@@ -58,22 +58,22 @@ export function TaskFilter({ filterBy, setFilterBy }) {
             <h3>Sort:</h3>
             <div className="sort-field">
                 <label>
-                    <span>Speed</span>
+                    <span>Importance</span>
                     <input
                         type="radio"
                         name="sortField"
-                        value="speed"
-                        checked={filterToEdit.sortField === 'speed'}
+                        value="importance"
+                        checked={filterToEdit.sortField === 'importance'}
                         onChange={handleChange}
                     />
                 </label>
                 <label>
-                    <span>Vendor</span>
+                    <span>Title</span>
                     <input
                         type="radio"
                         name="sortField"
-                        value="vendor"
-                        checked={filterToEdit.sortField === 'vendor'}            
+                        value="title"
+                        checked={filterToEdit.sortField === 'title'}            
                         onChange={handleChange}
                     />
                 </label>

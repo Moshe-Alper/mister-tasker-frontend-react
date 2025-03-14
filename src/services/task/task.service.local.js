@@ -15,27 +15,27 @@ export const taskService = {
 window.cs = taskService
 
 
-async function query(filterBy = { txt: '', price: 0 }) {
+async function query(filterBy = { txt: '' }) {
     var tasks = await storageService.query(STORAGE_KEY)
-    const { txt, minSpeed, maxPrice, sortField, sortDir } = filterBy
+    const { txt, minImportance, sortField, sortDir } = filterBy
 
     if (txt) {
         const regex = new RegExp(filterBy.txt, 'i')
-        tasks = tasks.filter(task => regex.test(task.vendor) || regex.test(task.description))
+        tasks = tasks.filter(task => regex.test(task.title) || regex.test(task.description))
     }
-    if (minSpeed) {
-        tasks = tasks.filter(task => task.speed >= minSpeed)
+    if (minImportance) {
+        tasks = tasks.filter(task => task.importance >= minImportance)
     }
-    if(sortField === 'vendor' || sortField === 'owner'){
+    if(sortField === 'title' || sortField === 'owner'){
         tasks.sort((task1, task2) => 
             task1[sortField].localeCompare(task2[sortField]) * +sortDir)
     }
-    if(sortField === 'price' || sortField === 'speed'){
+    if( sortField === 'importance'){
         tasks.sort((task1, task2) => 
             (task1[sortField] - task2[sortField]) * +sortDir)
     }
     
-    tasks = tasks.map(({ _id, vendor, price, speed, owner }) => ({ _id, vendor, price, speed, owner }))
+    tasks = tasks.map(({ _id, title, importance, owner }) => ({ _id, title, importance, owner }))
     return tasks
 }
 
@@ -53,15 +53,13 @@ async function save(task) {
     if (task._id) {
         const taskToSave = {
             _id: task._id,
-            price: task.price,
-            speed: task.speed,
+            importance: task.importance,
         }
         savedTask = await storageService.put(STORAGE_KEY, taskToSave)
     } else {
         const taskToSave = {
-            vendor: task.vendor,
-            price: task.price,
-            speed: task.speed,
+            title: task.title,
+            importance: task.importance,
             // Later, owner is set by the backend
             owner: userService.getLoggedinUser(),
             msgs: []
