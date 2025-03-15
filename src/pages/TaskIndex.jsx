@@ -54,7 +54,7 @@ export function TaskIndex() {
     async function onStartTask(task) {
         try {
             const updatedTask = await taskService.startTask(task._id)
-            showSuccessMsg(`Task "${task.title}" started successfully`)
+            showSuccessMsg(`Task "${task.title}" is now running`)
         } catch (err) {
             showErrorMsg('Cannot start task')
         }
