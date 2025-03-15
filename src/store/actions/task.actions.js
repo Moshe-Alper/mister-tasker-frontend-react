@@ -55,6 +55,21 @@ export async function updateTask(task) {
     }
 }
 
+export async function startTask(task) {
+    try {
+        store.dispatch(getCmdUpdateTask({...task, status: 'running'}))
+        
+        const updatedTask = await taskService.startTask(task._id)
+        
+        store.dispatch(getCmdUpdateTask(updatedTask))
+        return updatedTask
+    } catch (err) {
+        store.dispatch(getCmdUpdateTask(task))
+        console.log('Cannot start task', err)
+        throw err
+    }
+}
+
 export async function addTaskMsg(taskId, txt) {
     try {
         const msg = await taskService.addTaskMsg(taskId, txt)

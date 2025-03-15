@@ -5,6 +5,7 @@ export const taskService = {
     getById,
     save,
     remove,
+    startTask,
     addTaskMsg
 }
 
@@ -19,6 +20,7 @@ function getById(taskId) {
 async function remove(taskId) {
     return httpService.delete(`task/${taskId}`)
 }
+
 async function save(task) {
     var savedTask
     if (task._id) {
@@ -27,6 +29,10 @@ async function save(task) {
         savedTask = await httpService.post('task', task)
     }
     return savedTask
+}
+
+async function startTask(taskId) {
+    return httpService.post(`task/${taskId}/start`)
 }
 
 async function addTaskMsg(taskId, txt) {
