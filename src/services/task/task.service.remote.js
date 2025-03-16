@@ -6,6 +6,8 @@ export const taskService = {
     save,
     remove,
     startTask,
+    toggleWorker,
+    getWorkerStatus,
     addTaskMsg
 }
 
@@ -33,6 +35,15 @@ async function save(task) {
 
 async function startTask(taskId) {
     return httpService.post(`task/${taskId}/start`)
+}
+
+
+async function toggleWorker() {
+    return await httpService.post('task/worker/toggle')
+}
+
+async function getWorkerStatus() {
+    return await httpService.get('task/worker/status')
 }
 
 async function addTaskMsg(taskId, txt) {

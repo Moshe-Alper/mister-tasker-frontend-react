@@ -22,7 +22,7 @@ export function AppHeader() {
 		<header className="app-header full">
 			<nav>
 				<NavLink to="/" className="logo">
-					E2E Demo
+					Mister Tasker
 				</NavLink>
 				<NavLink to="about">About</NavLink>
 				<NavLink to="task">Tasks</NavLink>

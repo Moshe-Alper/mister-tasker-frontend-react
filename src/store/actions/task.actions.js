@@ -70,6 +70,26 @@ export async function startTask(task) {
     }
 }
 
+export async function toggleTaskWorker() {
+    try {
+        const response = await taskService.toggleWorker()
+        return response
+    } catch (err) {
+        console.log('Cannot toggle task worker', err)
+        throw err
+    }
+}
+
+export async function loadWorkerStatus() {
+    try {
+        const response = await taskService.getWorkerStatus()
+        return response
+    } catch (err) {
+        console.log('Cannot load worker status', err)
+        throw err
+    }
+}
+
 export async function addTaskMsg(taskId, txt) {
     try {
         const msg = await taskService.addTaskMsg(taskId, txt)
