@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { loadTasks, addTask, updateTask, removeTask, toggleTaskWorker, loadWorkerStatus, addTaskMsg } from '../store/actions/task.actions'
-
+import { socketService, SOCKET_EVENT_TASK_ADDED, SOCKET_EVENT_TASK_UPDATED, SOCKET_EVENT_TASK_REMOVED } from '../services/socket.service'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { taskService } from '../services/task'
 
@@ -29,6 +29,24 @@ export function TaskIndex() {
             }
         }
         fetchWorkerStatus()
+    }, [])
+
+    useEffect(() => {
+        // Start watching tasks when component mounts
+        socketService.watchTasks()
+
+        // Set up socket listeners
+        socketService.on(SOCKET_EVENT_TASK_ADDED, onTaskAdded)
+        socketService.on(SOCKET_EVENT_TASK_UPDATED, onTaskUpdated)
+        socketService.on(SOCKET_EVENT_TASK_REMOVED, onTaskRemoved)
+
+        // Clean up listeners when component unmounts
+        return () => {
+            socketService.stopWatchingTasks()
+            socketService.off(SOCKET_EVENT_TASK_ADDED, onTaskAdded)
+            socketService.off(SOCKET_EVENT_TASK_UPDATED, onTaskUpdated)
+            socketService.off(SOCKET_EVENT_TASK_REMOVED, onTaskRemoved)
+        }
     }, [])
 
     async function onRemoveTask(taskId) {
@@ -82,6 +100,22 @@ export function TaskIndex() {
             showErrorMsg('Cannot toggle task worker')
         }
     }
+
+    function onTaskAdded(task) {
+        showSuccessMsg(`New task added: ${task.title}`)
+        loadTasks(filterBy)
+    }
+
+    function onTaskUpdated(task) {
+        showSuccessMsg(`Task updated: ${task.title}`)
+        loadTasks(filterBy)
+    }
+
+    function onTaskRemoved(taskId) {
+        showSuccessMsg('Task was removed')
+        loadTasks(filterBy)
+    }
+    
 
 
     return (

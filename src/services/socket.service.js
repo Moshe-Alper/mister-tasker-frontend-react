@@ -10,6 +10,15 @@ export const SOCKET_EVENT_REVIEW_ADDED = 'review-added'
 export const SOCKET_EVENT_REVIEW_REMOVED = 'review-removed'
 export const SOCKET_EVENT_REVIEW_ABOUT_YOU = 'review-about-you'
 
+export const SOCKET_EVENT_TASK_ADDED = 'task-added'
+export const SOCKET_EVENT_TASK_UPDATED = 'task-updated'
+export const SOCKET_EVENT_TASK_REMOVED = 'task-removed'
+export const SOCKET_EVENT_TASK_MSG_ADDED = 'task-msg-added'
+export const SOCKET_EVENT_TASK_MSG_REMOVED = 'task-msg-removed'
+export const SOCKET_EMIT_TASK_WATCH = 'task-watch'
+export const SOCKET_EMIT_TASK_STOP_WATCH = 'task-stop-watch'
+
+
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
@@ -52,7 +61,12 @@ function createSocketService() {
     terminate() {
       socket = null
     },
-
+    watchTasks() {
+      socket.emit(SOCKET_EMIT_TASK_WATCH)
+    },
+    stopWatchingTasks() {
+      socket.emit(SOCKET_EMIT_TASK_STOP_WATCH)
+    }
   }
   return socketService
 }
