@@ -1,7 +1,7 @@
 import { userService } from '../services/user'
 import { Link } from 'react-router-dom'
 
-export function TaskList({ tasks, onRemoveTask, onUpdateTask, onStartTask }) {
+export function TaskList({ tasks, onRemoveTask, onStartTask }) {
 
     function shouldShowActionBtns(task) {
         const user = userService.getLoggedinUser()
@@ -40,7 +40,6 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, onStartTask }) {
                                                 {task.status === 'failed' ? 'Retry' : 'Start'}
                                             </button>
                                         )}
-                                        <button onClick={() => onUpdateTask(task)}>Edit</button>
                                         <button onClick={() => onRemoveTask(task._id)}>Delete</button>
                                     </div>
                                 )}
