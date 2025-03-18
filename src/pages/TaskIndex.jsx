@@ -5,6 +5,7 @@ import { loadTasks, addTask, updateTask, removeTask, toggleTaskWorker, loadWorke
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { taskService } from '../services/task'
+import { socketService, SOCKET_EVENT_TASK_UPDATED } from '../services/socket.service'
 
 import { TaskList } from '../cmps/TaskList'
 import { TaskFilter } from '../cmps/TaskFilter'
@@ -29,7 +30,20 @@ export function TaskIndex() {
             }
         }
         fetchWorkerStatus()
+
+        socketService.on(SOCKET_EVENT_TASK_UPDATED, handleTaskUpdate)
+        
+        // Clean up on component unmount
+        return () => {
+            socketService.off(SOCKET_EVENT_TASK_UPDATED)
+        }
     }, [])
+
+
+    function handleTaskUpdate(updatedTask) {
+        updateTask(updatedTask)
+        showSuccessMsg(`Task "${updatedTask.title}" updated (${updatedTask.status})`)
+    }
 
     async function onRemoveTask(taskId) {
         try {
@@ -51,25 +65,43 @@ export function TaskIndex() {
         }
     }
 
-    async function onUpdateTask(task) {
-        const importance = +prompt('New importance?', task.importance)
-        if (importance === 0 || importance === task.importance) return
-
-        const taskToSave = { ...task, importance }
-        try {
-            const savedTask = await updateTask(taskToSave)
-            showSuccessMsg(`Task updated, new importance: ${savedTask.importance}`)
-        } catch (err) {
-            showErrorMsg('Cannot update task')
+    async function onUpdateTask(task, updates = {}) {
+        // If no specific updates provided, use the existing importance prompt
+        if (Object.keys(updates).length === 0) {
+          const importance = +prompt('New importance?', task.importance)
+          if (importance === 0 || importance === task.importance) return
+          updates = { importance }
         }
-    }
+        
+        const taskToSave = { ...task, ...updates }
+        try {
+          const savedTask = await updateTask(taskToSave)
+          
+          // Customize message based on what was updated
+          let message = 'Task updated'
+          if (updates.importance) message += `, new importance: ${savedTask.importance}`
+          if (updates.status) message += `, new status: ${savedTask.status}`
+          
+          showSuccessMsg(message)
+        } catch (err) {
+          showErrorMsg('Cannot update task')
+        }
+      }
 
-    async function onStartTask(task) {
+      async function onStartTask(task) {
         try {
             const updatedTask = await taskService.startTask(task._id)
-            showSuccessMsg(`Task "${task.title}" is now running`)
+            
+            if (updatedTask.status === 'done') {
+                showSuccessMsg(`Task "${task.title}" completed successfully`)
+            } else if (updatedTask.status === 'failed') {
+                showErrorMsg(`Task "${task.title}" execution failed: ${updatedTask.errors[updatedTask.errors.length-1] || 'Unknown error'}`)
+            } else {
+                showErrorMsg(`Task "${task.title}" status is now ${updatedTask.status}`)
+            }
         } catch (err) {
-            showErrorMsg('Cannot start task')
+            // This is for API/network failures, not task execution failures
+            showErrorMsg(`Cannot start task: ${err.message || 'Server error'}`)
         }
     }
 
