@@ -1,18 +1,51 @@
 .task-index {
     header {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr; 
         align-items: center;
         justify-content: space-between;
-
         padding-block: .3em;
-    }
 
-    h2 {
-        margin: 0;
-        font-size: 1.3em;
-    }
+        h1.title {
+            font-size: 1.2rem;
+            text-align: center;
+            color: #333;
+            margin-block-end: 1.25rem; // 20px
+        }
 
-    button {
-        margin-inline-end: 0;
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem; 
+            margin-block-end: 1.25rem; // 20px
+
+            .btn {
+                padding: 0.625rem; // 10px
+                border: none;
+                border-radius: 0.25rem; // 4px
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                margin-inline-end: 0;
+
+
+                &.generate {
+                    background-color: #007bff;
+                }
+
+                &.clear {
+                    background-color: #dc3545;
+                }
+
+                &.create {
+                    background-color: #28a745;
+                }
+
+                &.worker {
+                    background-color: #ffc107;
+                    color: #212529;
+                }
+            }
+        }
     }
 }

@@ -49,14 +49,18 @@ export function TaskIndex() {
         }
     }
 
+    async function onClearTasks() {
+        console.log('clear')
+    }
+
     async function onAddTask() {
         const task = taskService.getEmptyTask()
         const title = prompt('Title?')
         if (!title) return showErrorMsg('Task must have a title')
-    
+
         const importance = +prompt('Importance?', 1)
         if (isNaN(importance) || importance < 1) return showErrorMsg('Task must have a valid importance')
-    
+
         task.title = title
         task.importance = importance
         try {
@@ -64,6 +68,27 @@ export function TaskIndex() {
             showSuccessMsg(`Task added (id: ${savedTask._id})`)
         } catch (err) {
             showErrorMsg('Cannot add task')
+        }
+    }
+
+    async function onGenerateTasks() {
+        try {
+            const numTasks = +prompt('How many tasks to generate?', 3)
+            if (isNaN(numTasks) || numTasks < 1) return showErrorMsg('Enter a valid number')
+
+            const tasks = []
+            for (let i = 0; i < numTasks; i++) {
+                const task = taskService.getEmptyTask()
+                task.title = `Task ${i + 1}`
+                task.importance = Math.ceil(Math.random() * 5)
+                tasks.push(task)
+            }
+
+            await Promise.all(tasks.map(addTask))
+            showSuccessMsg(`${numTasks} tasks generated`)
+            loadTasks(filterBy)
+        } catch (err) {
+            showErrorMsg('Cannot generate tasks')
         }
     }
 
@@ -100,16 +125,21 @@ export function TaskIndex() {
             showSuccessMsg(`Task "${task.title}" status updated to "${task.status}"`)
         }
     }
-    
+
 
 
     return (
         <main className="task-index">
             <header>
-                <button onClick={onAddTask}>Create new task</button>
-                <button onClick={onToggleWorker}>
-                    {isWorkerRunning ? 'Stop Task Worker' : 'Start Task Worker'}
-                </button>
+                <h1 className="title">Mister Tasker</h1>
+                <div className="button-group">
+                    <button className="btn generate" onClick={onGenerateTasks}>Generate Tasks</button>
+                    <button className="btn clear" onClick={onClearTasks}>Clear Tasks</button>
+                    <button className="btn create" onClick={onAddTask}>Create new task</button>
+                    <button className="btn worker" onClick={onToggleWorker}>
+                        {isWorkerRunning ? 'Stop Task Worker' : 'Start Task Worker'}
+                    </button>
+                </div>
             </header>
             <TaskFilter filterBy={filterBy} setFilterBy={setFilterBy} />
             <TaskList
