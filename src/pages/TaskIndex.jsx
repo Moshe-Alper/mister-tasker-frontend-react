@@ -51,8 +51,14 @@ export function TaskIndex() {
 
     async function onAddTask() {
         const task = taskService.getEmptyTask()
-        task.title = prompt('Title?')
-        task.importance = +prompt('Importance?', 1) || 1
+        const title = prompt('Title?')
+        if (!title) return showErrorMsg('Task must have a title')
+    
+        const importance = +prompt('Importance?', 1)
+        if (isNaN(importance) || importance < 1) return showErrorMsg('Task must have a valid importance')
+    
+        task.title = title
+        task.importance = importance
         try {
             const savedTask = await addTask(task)
             showSuccessMsg(`Task added (id: ${savedTask._id})`)
@@ -64,7 +70,7 @@ export function TaskIndex() {
     async function onStartTask(task) {
         try {
             const updatedTask = await taskService.startTask(task._id)
-            _handleTaskMessage(updatedTask)
+            handleTaskMessage(updatedTask)
         } catch (err) {
             showErrorMsg(`Cannot start task: ${err.message || 'Server error'}`)
         }
@@ -72,7 +78,7 @@ export function TaskIndex() {
 
     function handleTaskUpdate(updatedTask) {
         updateTask(updatedTask)
-        _handleTaskMessage(updatedTask)
+        handleTaskMessage(updatedTask)
     }
 
     async function onToggleWorker() {
@@ -85,7 +91,7 @@ export function TaskIndex() {
         }
     }
 
-    function _handleTaskMessage(task) {
+    function handleTaskMessage(task) {
         if (task.status === 'done') {
             showSuccessMsg(`Task "${task.title}" completed successfully`)
         } else if (task.status === 'failed') {
