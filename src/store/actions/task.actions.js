@@ -1,6 +1,6 @@
 import { taskService } from '../../services/task'
 import { store } from '../store'
-import { ADD_TASK, REMOVE_TASK, SET_TASKS, SET_TASK, UPDATE_TASK, ADD_TASK_MSG } from '../reducers/task.reducer'
+import { ADD_TASK, REMOVE_TASK, SET_TASKS, SET_TASK, UPDATE_TASK, CLEAR_TASKS, ADD_TASK_MSG } from '../reducers/task.reducer'
 
 export async function loadTasks(filterBy) {
     try {
@@ -22,7 +22,6 @@ export async function loadTask(taskId) {
     }
 }
 
-
 export async function removeTask(taskId) {
     try {
         await taskService.remove(taskId)
@@ -32,6 +31,17 @@ export async function removeTask(taskId) {
         throw err
     }
 }
+
+export async function clearTasks() {
+    try {
+        await taskService.clear()
+        store.dispatch(getCmdClearTasks())
+    } catch (err) {
+        console.log('Cannot clear tasks', err)
+        throw err
+    }
+}
+
 
 export async function addTask(task) {
     try {
@@ -132,6 +142,13 @@ function getCmdUpdateTask(task) {
         task
     }
 }
+
+function getCmdClearTasks() {
+    return {
+        type: CLEAR_TASKS,
+    }
+}
+
 function getCmdAddTaskMsg(msg) {
     return {
         type: ADD_TASK_MSG,

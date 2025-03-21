@@ -4,6 +4,7 @@ export const REMOVE_TASK = 'REMOVE_TASK'
 export const ADD_TASK = 'ADD_TASK'
 export const UPDATE_TASK = 'UPDATE_TASK'
 export const ADD_TASK_MSG = 'ADD_TASK_MSG'
+export const CLEAR_TASKS = 'CLEAR_TASKS'
 
 const initialState = {
     tasks: [],
@@ -31,6 +32,9 @@ export function taskReducer(state = initialState, action) {
         case UPDATE_TASK:
             tasks = state.tasks.map(task => (task._id === action.task._id) ? action.task : task)
             newState = { ...state, tasks }
+            break
+        case CLEAR_TASKS:
+            newState = { ...state, tasks: [], lastRemovedTask: null }
             break
         case ADD_TASK_MSG:
             newState = { ...state, task: { ...state.task, msgs: [...state.task.msgs || [], action.msg] } }

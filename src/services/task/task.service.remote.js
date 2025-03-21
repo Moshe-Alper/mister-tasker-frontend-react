@@ -5,6 +5,7 @@ export const taskService = {
     getById,
     save,
     remove,
+    clear,
     startTask,
     toggleWorker,
     getWorkerStatus,
@@ -22,6 +23,10 @@ function getById(taskId) {
 async function remove(taskId) {
     return httpService.delete(`task/${taskId}`)
 }
+
+async function clear() { 
+    return httpService.delete(`task/clear`) 
+} 
 
 async function save(task) {
     var savedTask

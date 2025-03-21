@@ -77,16 +77,7 @@ export function TaskFilter({ filterBy, setFilterBy }) {
                         onChange={handleChange}
                     />
                 </label>
-                <label>
-                    <span>Owner</span>
-                    <input
-                        type="radio"
-                        name="sortField"
-                        value="owner"
-                        checked={filterToEdit.sortField === 'owner'}                        
-                        onChange={handleChange}
-                    />
-                </label>
+
             </div>
             <div className="sort-dir">
                 <label>

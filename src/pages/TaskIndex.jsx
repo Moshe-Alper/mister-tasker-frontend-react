@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { loadTasks, addTask, updateTask, removeTask, toggleTaskWorker, loadWorkerStatus, addTaskMsg } from '../store/actions/task.actions'
+import { loadTasks, addTask, updateTask, removeTask, toggleTaskWorker, loadWorkerStatus, clearTasks, addTaskMsg } from '../store/actions/task.actions'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { taskService } from '../services/task'
@@ -9,6 +9,7 @@ import { socketService, SOCKET_EVENT_TASK_UPDATED } from '../services/socket.ser
 
 import { TaskList } from '../cmps/TaskList'
 import { TaskFilter } from '../cmps/TaskFilter'
+import { getRandomIntInclusive } from '../services/util.service'
 
 export function TaskIndex() {
 
@@ -50,8 +51,15 @@ export function TaskIndex() {
     }
 
     async function onClearTasks() {
-        console.log('clear')
+        try {
+            await clearTasks() 
+            showSuccessMsg('All tasks cleared')
+            loadTasks(filterBy)
+        } catch (err) {
+            showErrorMsg('Cannot clear tasks')
+        }
     }
+    
 
     async function onAddTask() {
         const task = taskService.getEmptyTask()
@@ -79,7 +87,7 @@ export function TaskIndex() {
             const tasks = []
             for (let i = 0; i < numTasks; i++) {
                 const task = taskService.getEmptyTask()
-                task.title = `Task ${i + 1}`
+                task.title = `Task ${getRandomIntInclusive(1, 9999)}`
                 task.importance = Math.ceil(Math.random() * 5)
                 tasks.push(task)
             }

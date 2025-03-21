@@ -26,7 +26,7 @@ async function query(filterBy = { txt: '' }) {
     if (minImportance) {
         tasks = tasks.filter(task => task.importance >= minImportance)
     }
-    if(sortField === 'title' || sortField === 'owner'){
+    if(sortField === 'title'){
         tasks.sort((task1, task2) => 
             task1[sortField].localeCompare(task2[sortField]) * +sortDir)
     }
@@ -35,7 +35,7 @@ async function query(filterBy = { txt: '' }) {
             (task1[sortField] - task2[sortField]) * +sortDir)
     }
     
-    tasks = tasks.map(({ _id, title, importance, owner }) => ({ _id, title, importance, owner }))
+    tasks = tasks.map(({ _id, title, importance }) => ({ _id, title, importance }))
     return tasks
 }
 
@@ -60,8 +60,6 @@ async function save(task) {
         const taskToSave = {
             title: task.title,
             importance: task.importance,
-            // Later, owner is set by the backend
-            owner: userService.getLoggedinUser(),
             msgs: []
         }
         savedTask = await storageService.post(STORAGE_KEY, taskToSave)
