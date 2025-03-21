@@ -9,7 +9,6 @@ export const taskService = {
     startTask,
     toggleWorker,
     getWorkerStatus,
-    addTaskMsg
 }
 
 async function query(filterBy = { txt: '' }) {
@@ -51,7 +50,3 @@ async function getWorkerStatus() {
     return await httpService.get('task/worker/status')
 }
 
-async function addTaskMsg(taskId, txt) {
-    const savedMsg = await httpService.post(`task/${taskId}/msg`, {txt})
-    return savedMsg
-}

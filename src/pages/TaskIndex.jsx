@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { loadTasks, addTask, updateTask, removeTask, toggleTaskWorker, loadWorkerStatus, clearTasks, addTaskMsg } from '../store/actions/task.actions'
+import { loadTasks, addTask, updateTask, removeTask, toggleTaskWorker, loadWorkerStatus, clearTasks} from '../store/actions/task.actions'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { taskService } from '../services/task'

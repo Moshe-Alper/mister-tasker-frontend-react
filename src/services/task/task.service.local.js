@@ -1,7 +1,7 @@
 
 import { storageService } from '../async-storage.service'
 import { makeId } from '../util.service'
-import { userService } from '../user'
+
 
 const STORAGE_KEY = 'task'
 
@@ -10,7 +10,6 @@ export const taskService = {
     getById,
     save,
     remove,
-    addTaskMsg
 }
 window.cs = taskService
 
@@ -60,24 +59,9 @@ async function save(task) {
         const taskToSave = {
             title: task.title,
             importance: task.importance,
-            msgs: []
         }
         savedTask = await storageService.post(STORAGE_KEY, taskToSave)
     }
     return savedTask
 }
 
-async function addTaskMsg(taskId, txt) {
-    // Later, this is all done by the backend
-    const task = await getById(taskId)
-
-    const msg = {
-        id: makeId(),
-        by: userService.getLoggedinUser(),
-        txt
-    }
-    task.msgs.push(msg)
-    await storageService.put(STORAGE_KEY, task)
-
-    return msg
-}

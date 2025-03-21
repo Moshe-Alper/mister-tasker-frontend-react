@@ -1,6 +1,6 @@
 import { taskService } from '../../services/task'
 import { store } from '../store'
-import { ADD_TASK, REMOVE_TASK, SET_TASKS, SET_TASK, UPDATE_TASK, CLEAR_TASKS, ADD_TASK_MSG } from '../reducers/task.reducer'
+import { ADD_TASK, REMOVE_TASK, SET_TASKS, SET_TASK, UPDATE_TASK, CLEAR_TASKS } from '../reducers/task.reducer'
 
 export async function loadTasks(filterBy) {
     try {
@@ -100,17 +100,6 @@ export async function loadWorkerStatus() {
     }
 }
 
-export async function addTaskMsg(taskId, txt) {
-    try {
-        const msg = await taskService.addTaskMsg(taskId, txt)
-        store.dispatch(getCmdAddTaskMsg(msg))
-        return msg
-    } catch (err) {
-        console.log('Cannot add task msg', err)
-        throw err
-    }
-}
-
 // Command Creators:
 function getCmdSetTasks(tasks) {
     return {
@@ -149,12 +138,6 @@ function getCmdClearTasks() {
     }
 }
 
-function getCmdAddTaskMsg(msg) {
-    return {
-        type: ADD_TASK_MSG,
-        msg
-    }
-}
 
 // unitTestActions()
 async function unitTestActions() {
@@ -165,5 +148,4 @@ async function unitTestActions() {
         title: 'Task-Good',
     })
     await removeTask('m1oC7')
-    // TODO unit test addTaskMsg
 }

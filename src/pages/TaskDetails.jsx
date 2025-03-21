@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
-import { loadTask, addTaskMsg } from '../store/actions/task.actions'
+import { loadTask} from '../store/actions/task.actions'
 
 
 export function TaskDetails() {
@@ -16,15 +16,7 @@ export function TaskDetails() {
     loadTask(taskId)
   }, [taskId])
 
-  async function onAddTaskMsg(taskId) {
-    try {
-        await addTaskMsg(taskId, 'bla bla ' + parseInt(Math.random()*10))
-        showSuccessMsg(`Task msg added`)
-    } catch (err) {
-        showErrorMsg('Cannot add task msg')
-    }        
 
-}
 
   return (
     <section className="task-details">
@@ -35,8 +27,6 @@ export function TaskDetails() {
         <pre> {JSON.stringify(task, null, 2)} </pre>
       </div>
       }
-      <button onClick={() => { onAddTaskMsg(task._id) }}>Add task msg</button>
-
     </section>
   )
 }

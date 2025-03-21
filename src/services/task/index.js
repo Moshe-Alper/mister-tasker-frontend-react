@@ -9,7 +9,6 @@ function getEmptyTask() {
 	return {
 		title: makeId(),
 		importance: getRandomIntInclusive(1, 3),
-		msgs: [],
 	}
 }
 

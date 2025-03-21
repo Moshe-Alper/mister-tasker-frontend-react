@@ -3,7 +3,6 @@ export const SET_TASK = 'SET_TASK'
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const ADD_TASK = 'ADD_TASK'
 export const UPDATE_TASK = 'UPDATE_TASK'
-export const ADD_TASK_MSG = 'ADD_TASK_MSG'
 export const CLEAR_TASKS = 'CLEAR_TASKS'
 
 const initialState = {
@@ -36,9 +35,6 @@ export function taskReducer(state = initialState, action) {
         case CLEAR_TASKS:
             newState = { ...state, tasks: [], lastRemovedTask: null }
             break
-        case ADD_TASK_MSG:
-            newState = { ...state, task: { ...state.task, msgs: [...state.task.msgs || [], action.msg] } }
-            break
         default:
     }
     return newState
@@ -62,10 +58,6 @@ function unitTestReducer() {
 
     state = taskReducer(state, { type: REMOVE_TASK, taskId: task2._id })
     console.log('After REMOVE_TASK:', state)
-
-    const msg = { id: 'm' + parseInt(Math.random() * 100), txt: 'Some msg' }
-    state = taskReducer(state, { type: ADD_TASK_MSG, taskId: task1._id, msg })
-    console.log('After ADD_TASK_MSG:', state)
 
     state = taskReducer(state, { type: REMOVE_TASK, taskId: task1._id })
     console.log('After REMOVE_TASK:', state)
