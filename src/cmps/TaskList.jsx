@@ -1,7 +1,7 @@
 import { userService } from '../services/user'
 import { Link } from 'react-router-dom'
 
-export function TaskList({ tasks, onRemoveTask, onStartTask }) {
+export function TaskList({ tasks, onRemoveTask, onUpdateTask, onStartTask }) {
 
     return (
         <section>
@@ -33,6 +33,7 @@ export function TaskList({ tasks, onRemoveTask, onStartTask }) {
                                         </button>
                                     )}
                                     <button onClick={() => onRemoveTask(task._id)}>Delete</button>
+                                    <button onClick={() => onUpdateTask(task._id)}>Update</button>
                                 </div>
 
                             </td>

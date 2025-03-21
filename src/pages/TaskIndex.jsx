@@ -69,13 +69,38 @@ export function TaskIndex() {
         const importance = +prompt('Importance?', 1)
         if (isNaN(importance) || importance < 1) return showErrorMsg('Task must have a valid importance')
 
+        const description = prompt('Description?')
+
         task.title = title
         task.importance = importance
+        task.description = description
+
         try {
             const savedTask = await addTask(task)
             showSuccessMsg(`Task added (id: ${savedTask._id})`)
         } catch (err) {
             showErrorMsg('Cannot add task')
+        }
+    }
+
+    async function onUpdateTask(taskId) {
+        try {
+            const task = tasks.find(task => task._id === taskId)
+            const title = prompt('New title?', task.title)
+            const description = prompt('New description?', task.description)
+            const importance = +prompt('New importance?', task.importance)
+    
+            if (!title) return showErrorMsg('Task must have a title')
+            if (isNaN(importance) || importance < 1) return showErrorMsg('Task must have a valid importance')
+    
+            task.title = title
+            task.description = description || task.description
+            task.importance = importance
+    
+            const updatedTask = await updateTask(task)
+            showSuccessMsg(`Task updated (id: ${updatedTask._id})`)
+        } catch (err) {
+            showErrorMsg('Cannot update task')
         }
     }
 
@@ -154,6 +179,7 @@ export function TaskIndex() {
                 tasks={tasks}
                 onRemoveTask={onRemoveTask}
                 onStartTask={onStartTask}
+                onUpdateTask={onUpdateTask}  
             />
         </main>
     )
