@@ -16,6 +16,7 @@ function getDefaultFilter() {
     return {
         txt: '',
         minImportance: '',
+        status: '',
         sortField: '',
         sortDir: '',
     }

@@ -2,6 +2,9 @@
 
 A modern task management application built with React and Vite, featuring real-time updates and a responsive design.
 
+- **Live Application**: 
+You can preview the live version at [Mister Tasker on Render](https://mister-tasker-3b3p.onrender.com/).
+
 ## Features
 
 - Real-time task updates using Socket.IO

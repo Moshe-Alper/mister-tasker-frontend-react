@@ -20,7 +20,7 @@ export function TaskDetails() {
 
   return (
     <section className="task-details">
-      <Link to="/task">Back to list</Link>
+      <Link to="/">Back to list</Link>
       <h1>Task Details</h1>
       {task && <div>
         <h3>{task.title}</h3>

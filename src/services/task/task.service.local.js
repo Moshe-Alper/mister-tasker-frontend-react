@@ -25,6 +25,7 @@ async function query(filterBy = { txt: '' }) {
     if (minImportance) {
         tasks = tasks.filter(task => task.importance >= minImportance)
     }
+    
     if(sortField === 'title'){
         tasks.sort((task1, task2) => 
             task1[sortField].localeCompare(task2[sortField]) * +sortDir)
