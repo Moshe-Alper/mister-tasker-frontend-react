@@ -3,6 +3,15 @@ import { Link } from 'react-router-dom'
 
 export function TaskList({ tasks, onRemoveTask, onUpdateTask, onStartTask }) {
 
+    function getStatusColor(status) {
+        switch (status) {
+            case 'running': return '#ffc107';
+            case 'done': return '#28a745';
+            case 'failed': return '#dc3545';
+            default: return '#17a2b8';
+        }
+    }
+
     return (
         <section>
             <table className="task-table">
@@ -20,9 +29,21 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, onStartTask }) {
                         <tr key={task._id}>
                             <td>
                                 <Link to={`/task/${task._id}`}>{task.title}</Link>
+                                <div className="description-section">
+                                <span>Description:</span>
+                                <p>{task.description}</p>
+                                </div>
+                        <div className="timestamps">
+                        <span>
+                          Created at: {task.createdAt ? new Date(task.createdAt).toLocaleString() : 'N/A'} | 
+                          Last tried at: {task.lastTriedAt ? new Date(task.lastTriedAt).toLocaleString() : 'N/A'} | 
+                          Done at: {task.doneAt ? new Date(task.doneAt).toLocaleString() : 'N/A'}
+                        </span>
+                      </div>
+
                             </td>
                             <td>{task.importance}</td>
-                            <td>{task.status}</td>
+                            <td style={{color: getStatusColor(task.status) }} >{task.status}</td>
                             <td>{task.triesCount > 0 ? task.triesCount : '-'}</td>
                             <td>
 

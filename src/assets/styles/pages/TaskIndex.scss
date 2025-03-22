@@ -1,9 +1,12 @@
 .task-index {
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 1.25rem;
+
     header {
         display: grid;
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
         align-items: center;
-        justify-content: space-between;
         padding-block: .3em;
 
         h1.title {
@@ -16,7 +19,7 @@
         .button-group {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1rem; 
+            gap: 1rem;
             margin-block-end: 1.25rem; // 20px
 
             .btn {
@@ -45,6 +48,19 @@
                     background-color: #ffc107;
                     color: #212529;
                 }
+            }
+        }
+    }
+}
+
+@supports (grid-template-columns: subgrid) {
+    .task-index {
+        .filters-container {
+
+            .importance-filters,
+            .status-filters {
+                grid-template-columns: subgrid;
+                grid-column: span 2;
             }
         }
     }

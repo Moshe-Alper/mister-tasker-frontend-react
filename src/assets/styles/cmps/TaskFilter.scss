@@ -4,7 +4,7 @@
     align-items: center;
     gap: 0 .5em;
 
-    background-color: $clr4;
+    background-color: $clr3;
     padding: .5em;
 
     h3 {
@@ -20,17 +20,18 @@
     input:is([type="text"], [type="number"]){
         height: 1.8em;
         border: none;
-        border-block-end: 1px solid $gray1;
+        border-block-end: 1px solid $clr-black4;
     
         &:focus {
             outline: none;
-            background-color: $gray1;
+            background-color: $clr-black1;
         }
     }
 
 
     .btn-clear {
         grid-column: 4;
+        color: $clr-black4;
     }
 
     .sort-field, .sort-dir {
@@ -55,12 +56,12 @@
         span {
             font-size: .9em;
             padding: 0.1em 0.3em;
-            outline: 1px solid $gray1;
+            outline: 1px solid $clr-black1;
         }
 
         &:has(:checked) span  {
-            background-color: $clr3;
-            color: $gray1;
+            background-color: $clr2;
+            color: $clr-black1;
         }
     }
 }
