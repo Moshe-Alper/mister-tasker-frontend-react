@@ -84,7 +84,9 @@ task-frontend-react/
 
 ## Backend Integration
 
-This frontend application is designed to work with a backend service. The backend service will be added later. Once the backend is integrated, you'll need to:
+This frontend application is designed to work with a backend service. It can also work with micro-service (but witout live updates/sockets):
+http://github.com/Moshe-Alper/task-backend
+https://github.com/Moshe-Alper/task-worker-micro-service
 
 1. Set up the backend service
 2. Configure the API endpoints in the frontend
