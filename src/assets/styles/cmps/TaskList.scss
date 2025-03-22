@@ -3,6 +3,11 @@
     border-collapse: collapse;
     margin-top: 1em;
   
+  a {
+    color: $clr-black3;
+    font-weight: 500;
+  }
+
     th, td {
       padding: 0.5em 1em;
       border: 1px solid $clr2;
@@ -10,6 +15,11 @@
       color: $clr-black4;
 
       .description-section {
+
+        h2 {
+          font-size: 1rem;
+          margin: 0;
+        }
         p {
           margin: 0;
         }

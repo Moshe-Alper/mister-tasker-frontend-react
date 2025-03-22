@@ -30,7 +30,7 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, onStartTask }) {
                             <td>
                                 <Link to={`/task/${task._id}`}>{task.title}</Link>
                                 <div className="description-section">
-                                <span>Description:</span>
+                                <h2>Description:</h2>
                                 <p>{task.description}</p>
                                 </div>
                         <div className="timestamps">

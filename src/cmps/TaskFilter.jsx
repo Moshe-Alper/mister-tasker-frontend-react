@@ -19,7 +19,7 @@ export function TaskFilter({ filterBy, setFilterBy }) {
                 if (!filterToEdit.sortDir) filterToEdit.sortDir = 1
                 break
             case 'number':
-                value = +ev.target.value || ''
+                value = ev.target.value === '' ? undefined : +ev.target.value
                 break
         }
         setFilterToEdit({ ...filterToEdit, [field]: value })
