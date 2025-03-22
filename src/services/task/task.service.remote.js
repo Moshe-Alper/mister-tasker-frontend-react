@@ -24,7 +24,7 @@ async function remove(taskId) {
 }
 
 async function clear() { 
-    return httpService.delete(`task/clear`) 
+    return httpService.delete('task/clear', {}) 
 } 
 
 async function save(task) {

@@ -158,9 +158,7 @@ export function TaskIndex() {
             showSuccessMsg(`Task "${task.title}" status updated to "${task.status}"`)
         }
     }
-
-
-
+    
     return (
         <main className="task-index">
             <header>

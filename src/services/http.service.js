@@ -26,7 +26,15 @@ async function ajax(endpoint, method = 'GET', data = null) {
     const url = `${BASE_URL}${endpoint}`
     const params = (method === 'GET') ? data : null
     
-    const options = { url, method, data, params }
+    const options = { 
+        url, 
+        method,
+        params
+    }
+    
+    if (data !== null && method !== 'GET') {
+        options.data = data
+    }
 
     try {
         const res = await axios(options)
